@@ -8,10 +8,25 @@ os.system("cls")
 from keyboard import press_and_release
 
 
+def banner():
+    os.system("cls")
+    print(Fore.GREEN+'''
+╭╮╭╮╭╮╱╱╭╮╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭╮╱╱╱╱╱╱╭╮
+┃┃┃┃┃┃╱╭╯╰╮╱╱╱╱╱╱╱╱╱╱╱╱╱╱╱╭╯╰╮╱╱╱╱╭╯╰╮
+┃┃┃┃┃┣━╋╮╭╋━━╮╭━━┳━━┳━━┳┳━┻╮╭╋━━┳━╋╮╭╯
+┃╰╯╰╯┃╭╋┫┃┃┃━┫┃╭╮┃━━┫━━╋┫━━┫┃┃╭╮┃╭╮┫┃
+╰╮╭╮╭┫┃┃┃╰┫┃━┫┃╭╮┣━━┣━━┃┣━━┃╰┫╭╮┃┃┃┃╰╮
+╱╰╯╰╯╰╯╰┻━┻━━╯╰╯╰┻━━┻━━┻┻━━┻━┻╯╰┻╯╰┻━╯ 
+________________________________________
+Author-Rajkishor Patra
+Version-1.0
+________________________________________''')
+    print(Fore.YELLOW+'''
+*Click anywhere you want to write the lines present in the text.txt file
+*it works globally so just go where you want then press F2 to write the lines
+ ''')    
 
-#first year students
-file_path = "text.txt"  # Replace with the path to your text file
-
+file_path = "text.txt" 
 def read_first_line(file_path):
     with open(file_path, "r") as file:
         lines = file.readlines()
@@ -37,21 +52,19 @@ def read_first_line(file_path):
             return first_line
         return None
 
-
 def on_press(key):
     global is_paused
     if key == keyboard.Key.f2:
         first_line = read_first_line(file_path)
         if first_line:
-            press_and_release("ctrl+f")
             press_and_release("ctrl+a")
             press_and_release("backspace")
             sleep(0.10)
             pyautogui.write(first_line)
-            print(f"student - {first_line} search completed")
+            print(f"Text Data - {first_line} completed✅")
 
         else:
-            print("No more students in the file. Press Esc to exit.")
+            print(Fore.RED+"No more texts in the text file. Press Esc to exit.'❌")
 
 def on_release(key):
     global is_paused
@@ -61,6 +74,8 @@ def on_release(key):
     elif key == keyboard.Key.f1:
         is_paused = True
 
-# Create a listener for key presses
-with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
-    listener.join()
+if __name__ == "__main__":
+    banner()
+    # Create a listener for key presses
+    with keyboard.Listener(on_press=on_press, on_release=on_release) as listener:
+        listener.join()
